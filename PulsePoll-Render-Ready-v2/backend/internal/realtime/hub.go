@@ -5,12 +5,10 @@ import (
 	"encoding/json"
 	"net/http"
 	"sync"
-	"time"
 
 	"github.com/gorilla/websocket"
 	"github.com/redis/go-redis/v9"
 
-	"pulsepoll/internal/models"
 	"pulsepoll/internal/store"
 )
 

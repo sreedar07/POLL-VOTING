@@ -72,7 +72,7 @@ function usePoll(slug:string){
    ws.onerror=()=>ws.close();
    return ws;
   };
-  load();const ws=connect();return()=>{stopped=true;if(timer)clearTimeout(timer);ws.close()};
+   load();const ws=connect();return()=>{stopped=true;if(timer)clearTimeout(timer);ws?.close()};
  },[slug]);
  return {data,online};
 }
@@ -123,7 +123,7 @@ function Share(){
 
 function Dashboard(){
  const [polls,setPolls]=useState<Poll[]>([]);const [err,setErr]=useState("");
- const load=()=>api("/admin/polls").then(d=>setPolls(d.polls)).catch(e=>setErr(e.message));useEffect(load,[]);
+  const load=()=>api("/admin/polls").then(d=>setPolls(d.polls)).catch(e=>setErr(e.message));useEffect(()=>{void load()},[]);
  const close=async(slug:string)=>{await api(`/admin/polls/${slug}/close`,{method:"POST"});load()};
  const del=async(slug:string)=>{if(confirm("Delete this poll?")){await api(`/admin/polls/${slug}`,{method:"DELETE"});load()}};
  return <section className="dashboard"><div className="dash-head"><div><span className="eyebrow">CREATOR CONSOLE</span><h1>Your polls</h1></div><Link className="primary" to="/">+ New poll</Link></div>

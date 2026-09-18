@@ -162,7 +162,8 @@ func (h *Handler) fingerprint(c *gin.Context) string {
 	cookie, err := c.Cookie("pp_voter")
 	if err != nil {
 		cookie = uuid.NewString()
-		http.SetCookie(c, &http.Cookie{Name: "pp_voter", Value: cookie, MaxAge: 8 * 24 * 3600, Path: "/", HttpOnly: true, SameSite: http.SameSiteLaxMode})
+		c.SetSameSite(http.SameSiteLaxMode)
+		c.SetCookie("pp_voter", cookie, 8*24*3600, "/", "", c.Request.TLS != nil, true)
 	}
 	raw := c.ClientIP() + "|" + cookie
 	sum := sha256.Sum256([]byte(raw))
