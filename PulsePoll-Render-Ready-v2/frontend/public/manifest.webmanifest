@@ -1,0 +1,9 @@
+{
+  "name":"PulsePoll",
+  "short_name":"PulsePoll",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#080b14",
+  "theme_color":"#7c5cff",
+  "icons":[]
+}
