@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: pulsepoll
+    runtime: docker
+    rootDir: PulsePoll-Render-Ready-v2
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB
+        value: pulsepoll
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: pulsepoll-redis
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: same-origin
+
+  - type: keyvalue
+    name: pulsepoll-redis
+    plan: free
+    region: oregon
+    ipAllowList: []
